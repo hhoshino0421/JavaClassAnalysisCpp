@@ -1,0 +1,191 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+
+// 数値を２進数文字列に変換
+//std::string to_binString(unsigned int val)
+std::string to_binString(char val)
+{
+    if( !val )
+        return std::string("0");
+    std::string str;
+    while( val != 0 ) {
+        if( (val & 1) == 0 )  // val は偶数か？
+            str.insert(str.begin(), '0');  //  偶数の場合
+        else
+            str.insert(str.begin(), '1');  //  奇数の場合
+        val >>= 1;
+    }
+    return str;
+}
+
+// 数値を16進数文字列に変換
+std::string to_hexString(char val, bool lower = true)
+{
+    if( !val )
+        return std::string("0");
+    std::string str;
+    const char hc = lower ? 'a' : 'A';     // 小文字 or 大文字表記
+    while( val != 0 ) {
+        int d = val & 15;     // 16進数一桁を取得
+        if( d < 10 )
+            str.insert(str.begin(), d + '0');  //  10未満の場合
+        else //  10以上の場合
+            str.insert(str.begin(), d - 10 + hc);
+        val >>= 4;
+    }
+    return str;
+}
+
+
+int main() {
+    //std::cout << "Hello, World!" << std::endl;
+
+    char input_file_name[] = "/Users/hoshinohitoshi/develop/Clion_Workspace/JavaClassAnalysis/data/StartupMain.class";
+
+
+//    std::ifstream fin( input_file_name, std::ios::in | std::ios::binary );
+//
+//    if (!fin){
+//        std::cout << "File can not open.";
+//        return 1;
+//    }
+
+    // for ifstream
+    std::ifstream ifs(input_file_name, std::ios::binary);
+    ifs.seekg(0, std::ios::end);
+    long eofpos = ifs.tellg();
+    ifs.clear();
+    ifs.seekg(0, std::ios::beg);
+    long begpos = ifs.tellg();
+    long file_size = eofpos - begpos;
+    //printf("ifstream :%ld\n", size2);
+    std::cout << "filesize: " << file_size << std::endl;
+    ifs.close();
+
+    //char * file_data = new char[file_size + 1];
+
+    FILE *binary = fopen(input_file_name, "rb");
+
+    char * file_data = new char[file_size + 1];
+    size_t bytes = 0;
+    size_t sizeof_data  = sizeof file_data;
+
+    //fread(&file_data, 1, file_size, binary);
+    bytes = fread(&file_data, sizeof *file_data, sizeof_data, binary);
+
+    std::cout << bytes << std::endl;
+    //std::cout << file_data << std::endl;
+
+
+    //delete[] file_data;
+    //delete[] file_data;
+
+
+
+/*
+    char * file_data = new char[file_size + 1];
+
+    fin.read( ( char * ) &file_data, file_size);
+
+    std::cout << file_data << std::endl;
+
+
+    delete[] file_data;
+*/
+
+
+              /*
+              char magic_data[4];
+              fin.read( ( char * ) &magic_data, 4);
+
+              std::cout << to_binString(magic_data[0]) << std::endl;
+              std::cout << to_hexString(magic_data[0]) << std::endl;
+
+              std::cout << to_binString(magic_data[1]) << std::endl;
+              std::cout << to_hexString(magic_data[1]) << std::endl;
+
+              std::cout << to_binString(magic_data[2]) << std::endl;
+              std::cout << to_hexString(magic_data[2]) << std::endl;
+
+              std::cout << to_binString(magic_data[3]) << std::endl;
+              std::cout << to_hexString(magic_data[3]) << std::endl;
+              */
+
+    //char magic_data;
+    //fin.read( ( char * ) &magic_data, 1);
+
+    //std::cout << to_binString(magic_data) << std::endl;
+    //std::cout << to_hexString(magic_data) << std::endl;
+
+
+
+    //std::cout << "Magic(bin):" << magic_data[0] << std::endl;
+
+//    std::stringstream ss;
+//    ss << std::hex << magic_data[0];
+//    std::string s = ss.str();
+//    std::cout << "Magic(Hex): " << s << std::endl;
+
+
+//    while(!fin.eof()){  //ファイルの最後まで続ける
+//        fin.read( ( char * ) &int_data, sizeof( int_data ) );
+//        //文字列ではないデータを読みこむ
+//        std::cout << int_data << std::endl;
+//
+//        std::stringstream ss;
+//        ss << std::hex << int_data;
+//        std::string s = ss.str();
+//
+//    }
+
+    //int int_data;
+    //fin.read( ( char * ) &int_data, sizeof( int_data ) );
+
+//    int magic_data;
+//    fin.read( ( char * ) &magic_data, 4);
+//    std::cout << "Magic(bin):" << magic_data << std::endl;
+//
+//    std::stringstream ss;
+//    ss << std::hex << magic_data;
+//    std::string s = ss.str();
+//    std::cout << "Magic(Hex): " << s << std::endl;
+//
+//    int minor_version;
+//    fin.read( ( char * ) &minor_version, 2);
+//    std::cout << "minor_version(bin):" << minor_version << std::endl;
+//
+//    std::stringstream ss2;
+//    ss2 << std::hex << minor_version;
+//    s = ss2.str();
+//    std::cout << "minor_version(Hex): " << s << std::endl;
+//
+//
+//    int major_version;
+//    fin.read( ( char * ) &major_version, 2);
+//    std::cout << "major_version(bin):" << major_version << std::endl;
+//
+//    std::stringstream ss3;
+//    ss3 << std::hex << major_version;
+//    s = ss3.str();
+//    std::cout << "major_version(Hex): " << s << std::endl;
+//
+//
+//
+//    int constant_pool_count;
+//    fin.read( ( char * ) &constant_pool_count, 2);
+//    std::cout << "constant_pool_count(bin):" << constant_pool_count << std::endl;
+//
+//    std::stringstream ss4;
+//    ss4 << std::hex << constant_pool_count;
+//    s = ss4.str();
+//    std::cout << "constant_pool_count(Hex): " << s << std::endl;
+//
+
+
+
+    //fin.close();  //ファイルを閉じる
+
+    return 0;
+}

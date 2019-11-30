@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/hoshinohitoshi/develop/Clion_Workspace/JavaClassAnalysis/FileAnalysisMain.cpp
+iostream
+-
+fstream
+-
+vector
+-
+FileAnalysisMain.h
+/Users/hoshinohitoshi/develop/Clion_Workspace/JavaClassAnalysis/FileAnalysisMain.h
+
+/Users/hoshinohitoshi/develop/Clion_Workspace/JavaClassAnalysis/FileAnalysisMain.h
+
